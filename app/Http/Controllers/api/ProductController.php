@@ -30,7 +30,7 @@ class ProductController extends Controller
             return response()->json([
                 'code' => 404,
                 'status' => 'failed',
-                'message' => 'Unable to communicate with database',
+                'message' => 'missing get data product',
                 'data' => null,
             ], 404);
         }

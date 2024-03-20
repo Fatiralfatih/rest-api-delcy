@@ -24,10 +24,10 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'category_id' => 'required|string|max:255|exists:categories,id',
             'title' => 'required|string|unique:products,title|max:255',
             'price' => 'required|string|max:255',
             'stock' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
             'description' => 'required|string|max:255',
             'thumbnail' => 'required|string|max:255',
         ];

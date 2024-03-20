@@ -14,7 +14,7 @@ class CreateProduct
             'title' => $request->title,
             'price' => $request->price,
             'stock' => $request->stock,
-            'category' => $request->category,
+            'category_id' => $request->category_id,
             'description' => $request->description,
             'thumbnail' => $request->thumbnail,
         ]);

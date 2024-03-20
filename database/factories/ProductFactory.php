@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,6 @@ class ProductFactory extends Factory
             'title' => fake()->sentence(3, true),
             'price' => fake()->randomNumber(5, true),
             'stock' => fake()->randomNumber(2, true),
-            'category' => fake()->word(),
             'description' => fake()->paragraph(),
             'thumbnail' => fake()->imageUrl(640, 480, 'products', false, 'delcy')
         ];
