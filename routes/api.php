@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\GalleryController;
 use App\Http\Controllers\api\ProductController;
 use Illuminate\Http\Request;
@@ -26,6 +27,9 @@ Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product
 Route::post('/product', [ProductController::class, 'create'])->name('product.create');
 Route::put('/product/{slug}', [ProductController::class, 'update'])->name('product.update');
 Route::delete('/product/{slug}', [ProductController::class, 'delete'])->name('product.delete');
+
+//category
+Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
 
 // gallery
 Route::get('gallery/{id}', [GalleryController::class, 'index'])->name('gallery.index');

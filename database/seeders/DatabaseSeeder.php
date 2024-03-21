@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Product::factory()->count(20)->forCategory(
+        Product::factory()->count(100)->forCategory(
             ['name' => 'gaming'],
             ['name' => 'asd']
         )->create();
