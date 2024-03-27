@@ -13,110 +13,61 @@ use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
+
+    function successResponse($messages, $data, $code = 200)
+    {
+        $response = [
+            'status' => 'success',
+            'messages' => $messages,
+            'data' => $data ? $data : null,
+        ];
+
+        return response()->json($response, $code);
+    }
+
     function index()
     {
-        try {
-            $product = app(GetProducts::class)->execute();
+        $product = app(GetProducts::class)->execute();
 
-            $data = ProductResource::collection($product);
+        $response = ProductResource::collection($product);
 
-            return response()->json([
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'get data products',
-                'data' => $data
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'code' => 404,
-                'status' => 'failed',
-                'message' => 'request failed get data product',
-                'data' => null,
-            ], 404);
-        }
+        return $this->successResponse('get products', $response);
     }
 
     function show($slug)
     {
-        try {
-            $product = app(GetProductBySlug::class)->execute($slug);
+        $product = app(GetProductBySlug::class)->execute($slug);
 
-            $data = new ProductResource($product);
+        $response = new ProductResource($product);
 
-            return response()->json([
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'get data product by slug',
-                'data' => $data
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'code' => 400,
-                'status' => 'failed',
-                'message' => 'missing parameter slug product',
-                'data' => null,
-            ], 400);
-        }
+        return $this->successResponse('get product by slug', $response);
     }
 
-    function create(StoreProductRequest $request)
+    function store(StoreProductRequest $request)
     {
         $product = app(CreateProduct::class)->execute($request);
 
-        return response()->json([
-            'code' => 201,
-            'status' => 'success',
-            'message' => 'create data product',
-            'data' => $product,
-        ], 201);
+        $response = new ProductResource($product);
+
+        return $this->successResponse('create product', $response);
     }
 
     function update($slug, UpdateProductRequest $request)
     {
-        try {
-            $product = app(GetProductBySlug::class)->execute($slug);
+        $product = app(GetProductBySlug::class)->execute($slug);
 
-            app(UpdateProduct::class)->execute($product, $request);
+        app(UpdateProduct::class)->execute($product, $request);
 
-            return response()->json([
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'update data product',
-                'data' => $product,
-            ], 200);
-        } catch (\Throwable $th) {
-
-            return response()->json([
-                'code' => 400,
-                'status' => 'failed',
-                'message' => 'missing parameter slug product',
-                'data' => null,
-            ], 400);
-        }
+        return $this->successResponse('update product', new ProductResource($product), 200);
     }
 
     function delete($slug)
     {
-        try {
-            $product = app(GetProductBySlug::class)->execute($slug);
+        $product = app(GetProductBySlug::class)->execute($slug);
 
-            $product->delete();
+        $product->delete();
 
-            return response()->json([
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'delete data product by slug',
-                'data' => $product
-            ]);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'code' => 400,
-                'status' => 'failed',
-                'message' => 'missing parameter slug product',
-                'data' => null,
-            ]);
-        }
+        return $this->successResponse('delete product by slug', new ProductResource($product));
     }
 
 }

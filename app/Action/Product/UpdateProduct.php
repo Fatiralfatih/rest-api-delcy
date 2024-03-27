@@ -14,6 +14,7 @@ class UpdateProduct
             'title' => $request->title,
             'price' => $request->price,
             'stock' => $request->stock,
+            'variant' => json_encode($request->variant),
             'thumbnail' => $request->thumbnail,
             'description' => $request->description,
         ]);

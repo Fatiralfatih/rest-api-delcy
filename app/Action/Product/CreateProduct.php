@@ -14,6 +14,7 @@ class CreateProduct
             'title' => $request->title,
             'price' => $request->price,
             'stock' => $request->stock,
+            'variant' => json_encode($request->variant),
             'category_id' => $request->category_id,
             'description' => $request->description,
             'thumbnail' => $request->thumbnail,

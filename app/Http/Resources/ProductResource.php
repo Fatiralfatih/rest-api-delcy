@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Nette\Utils\ObjectHelpers;
 
 class ProductResource extends JsonResource
 {
@@ -24,9 +25,11 @@ class ProductResource extends JsonResource
             'stock' => $this->stock,
             'description' => $this->description,
             'thumbnail' => $this->thumbnail,
-            'category' => new CategoryResource($this->whenLoaded('category'))
-            // 'created_at' => $this->created_at,
-            // 'updated_at' => $this->updated_at,
+            'variant' => json_decode($this->variant, true),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'category' => new CategoryResource($this->whenLoaded('category')),
+            'gallery' => GalleryResource::collection($this->whenLoaded('gallery')),
         ];
     }
 }

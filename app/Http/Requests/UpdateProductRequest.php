@@ -24,10 +24,15 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required|string|max:255|exists:categories,id',
+            'category_id' => 'required',
             'title' => 'required|string|max:255',
             'price' => 'required|string|max:255',
             'stock' => 'required|string|max:255',
+            'variant' => 'array',
+            'variant.color' => 'required|array',
+            'variant.size' => 'required|array',
+            'variant.color.*' => 'required|string',
+            'variant.size.*' => 'required|string',
             'description' => 'required|string|max:255',
             'thumbnail' => 'required|string|max:255',
         ];
@@ -41,5 +46,12 @@ class UpdateProductRequest extends FormRequest
             'message' => 'Validation errors',
             'errors' => $validator->errors()
         ], 422));
+    }
+
+    public function messages(): array
+    {
+        return [
+            'variant.array' => 'variant must be object'
+        ];
     }
 }
