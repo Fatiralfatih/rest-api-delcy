@@ -40,7 +40,7 @@ class ProductController extends Controller
 
         $response = new ProductResource($product);
 
-        return $this->successResponse('get product by slug', $response);
+        return $this->successResponse('get product by slug', $response, 202);
     }
 
     function store(StoreProductRequest $request)
@@ -49,7 +49,7 @@ class ProductController extends Controller
 
         $response = new ProductResource($product);
 
-        return $this->successResponse('create product', $response);
+        return $this->successResponse('create product', $response, 201);
     }
 
     function update($slug, UpdateProductRequest $request)
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
         app(UpdateProduct::class)->execute($product, $request);
 
-        return $this->successResponse('update product', new ProductResource($product), 200);
+        return $this->successResponse('update product', new ProductResource($product), 201);
     }
 
     function delete($slug)
@@ -67,7 +67,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return $this->successResponse('delete product by slug', new ProductResource($product));
+        return $this->successResponse('delete product by slug', new ProductResource($product), 200);
     }
 
 }

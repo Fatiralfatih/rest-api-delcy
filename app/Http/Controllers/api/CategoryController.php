@@ -9,24 +9,30 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    function successResponse($messages, $data, $code = 200)
+    {
+        $response = [
+            'status' => 'success',
+            'messages' => $messages,
+            'data' => $data ? $data : null,
+        ];
+
+        return response()->json($response, $code);
+    }
+
     function index()
     {
-        try {
-            $category = CategoryResource::collection(Category::all());
+        $response = CategoryResource::collection(Category::all());
 
-            return response()->json([
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'get data catagery',
-                'data' => $category,
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'code' => 400,
-                'status' => 'failed',
-                'message' => 'request failed get data categories',
-                'data' => null,
-            ], 400);
-        }
+        return $this->successResponse('get categories', $response, 200);
+    }
+
+    function store(Request $request)
+    {
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+
+        return $this->successResponse('create category', new CategoryResource($category), 201);
     }
 }

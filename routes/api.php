@@ -19,6 +19,7 @@ Route::delete('/product/{slug}', [ProductController::class, 'delete'])->name('pr
 
 //category
 Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
+Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
 
 // gallery
 Route::get('galleries/{id}', [GalleryController::class, 'index'])->name('gallery.index');
