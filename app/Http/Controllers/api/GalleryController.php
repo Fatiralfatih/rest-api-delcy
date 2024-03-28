@@ -8,40 +8,20 @@ use App\Action\Product\GetProductBySlug;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GalleryRequest;
 use App\Http\Resources\GalleryResource;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
 
-    function successResponse($messages, $data = [], $code = 200)
-    {
-        $response = [
-            'status' => 'success',
-            'messages' => $messages,
-            'data' => $data ? $data : null,
-        ];
-
-        return response()->json($response, $code);
-    }
-
-    function errorResponse($messages, $code = 404)
-    {
-        return response()->json([
-            'status' => 'failed',
-            'messages' => $messages,
-            'data' => null,
-        ], $code);
-    }
-
-    function index($productId)
+    function show(int $productId): JsonResponse
     {
         $gallery = app(GetGalleryByIdProduct::class)->execute($productId);
 
         return $this->successResponse('get gallery by id product', GalleryResource::collection($gallery), 200);
     }
 
-    function store($slugProduct, GalleryRequest $request)
+    function store(string $slugProduct, GalleryRequest $request): JsonResponse
     {
         $product = app(GetProductBySlug::class)->execute($slugProduct);
 
@@ -70,10 +50,9 @@ class GalleryController extends Controller
             ]);
             return $this->successResponse('create gallery by id product', new GalleryResource($response), 200);
         }
-
     }
 
-    function delete($idGallery)
+    function delete(int $idGallery): JsonResponse
     {
         $gallery = app(GetGalleryById::class)->execute($idGallery);
 

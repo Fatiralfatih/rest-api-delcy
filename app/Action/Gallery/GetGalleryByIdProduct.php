@@ -10,8 +10,8 @@ class GetGalleryByIdProduct
     {
         $gallery = Gallery::select(['id', 'product_id', 'image'])
             ->where('product_id', $productId)
-            ->with(['product:id,slug,title'])
-            ->firstOrFail();
+            ->with(['product'])
+            ->get();
 
         return $gallery;
     }

@@ -10,40 +10,29 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
-
-    function successResponse($messages, $data, $code = 200)
-    {
-        $response = [
-            'status' => 'success',
-            'messages' => $messages,
-            'data' => $data ? $data : null,
-        ];
-
-        return response()->json($response, $code);
-    }
-
-    function index()
+    function index(): JsonResponse
     {
         $product = app(GetProducts::class)->execute();
 
-        $response = ProductResource::collection($product);
+        $response = ProductResource::collection($product->all());
 
-        return $this->successResponse('get products', $response);
+        return $this->successResponse('get products', $response, 200);
     }
 
-    function show($slug)
+    function show(string $slug): JsonResponse
     {
         $product = app(GetProductBySlug::class)->execute($slug);
 
-        $response = new ProductResource($product);
+        $response = ProductResource::collection($product->all());
 
-        return $this->successResponse('get product by slug', $response, 202);
+        return $this->successResponse('get product by slug', $response, 201);
     }
 
-    function store(StoreProductRequest $request)
+    function store(StoreProductRequest $request): JsonResponse
     {
         $product = app(CreateProduct::class)->execute($request);
 
@@ -52,7 +41,7 @@ class ProductController extends Controller
         return $this->successResponse('create product', $response, 201);
     }
 
-    function update($slug, UpdateProductRequest $request)
+    function update(string $slug, UpdateProductRequest $request): JsonResponse
     {
         $product = app(GetProductBySlug::class)->execute($slug);
 
@@ -61,7 +50,7 @@ class ProductController extends Controller
         return $this->successResponse('update product', new ProductResource($product), 201);
     }
 
-    function delete($slug)
+    function delete(string $slug): JsonResponse
     {
         $product = app(GetProductBySlug::class)->execute($slug);
 

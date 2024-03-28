@@ -3,31 +3,22 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class CategoryController extends Controller
 {
-    function successResponse($messages, $data, $code = 200)
-    {
-        $response = [
-            'status' => 'success',
-            'messages' => $messages,
-            'data' => $data ? $data : null,
-        ];
 
-        return response()->json($response, $code);
-    }
-
-    function index()
+    function index(): JsonResponse
     {
         $response = CategoryResource::collection(Category::all());
 
         return $this->successResponse('get categories', $response, 200);
     }
 
-    function store(Request $request)
+    function store(CategoryRequest $request): JsonResponse
     {
         $category = Category::create([
             'name' => $request->name,

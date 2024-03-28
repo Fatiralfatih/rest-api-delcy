@@ -20,7 +20,7 @@ class GalleryResource extends JsonResource
             'id' => $this->id,
             'image' => $this->image,
             'product_id' => $this->product_id,
-            'product' => new ProductResource($this->product)
+            'product' => new ProductResource($this->whenLoaded('product'))
         ];
     }
 }

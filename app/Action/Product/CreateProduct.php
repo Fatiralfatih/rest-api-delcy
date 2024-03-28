@@ -2,12 +2,13 @@
 
 namespace App\Action\Product;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Support\Str;
 
 class CreateProduct
 {
-    function execute($request)
+    function execute(StoreProductRequest $request)
     {
         $product = Product::create([
             'slug' => str::slug($request->title, '-'),

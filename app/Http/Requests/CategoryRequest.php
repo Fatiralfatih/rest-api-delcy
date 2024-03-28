@@ -5,8 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
-class StoreProductRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +25,11 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => 'required|string|max:255|exists:categories,id',
-            'title' => 'required|string|max:255|unique:products,title',
-            'price' => 'required|string|max:255',
-            'stock' => 'required|string|max:255',
-            'variant' => 'required|array',
-            'variant.color' => 'required|array',
-            'variant.size' => 'required|array',
-            'variant.color.*' => 'required|string',
-            'variant.size.*' => 'required|string',
-            'description' => 'required|string',
-            'thumbnail' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:categories,name'
         ];
     }
 
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): JsonResponse
     {
         throw new HttpResponseException(response()->json([
             'code' => 422,
@@ -46,12 +37,5 @@ class StoreProductRequest extends FormRequest
             'message' => 'Validation errors',
             'errors' => $validator->errors()
         ], 422));
-    }
-
-    public function messages(): array
-    {
-        return [
-            'variant.array' => 'variant must be object'
-        ];
     }
 }
