@@ -22,4 +22,7 @@ Route::get('/categories', [CategoryController::class, 'index'])->name('category.
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
 
 // gallery
-Route::get('galleries/{id}', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('galleries/{productId}', [GalleryController::class, 'index'])->name('gallery.index');
+Route::post('gallery/{slugProduct}/create', [GalleryController::class, 'store'])->name('gallery.store');
+Route::put('gallery/{idGallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
+Route::delete('gallery/{idGallery}/delete', [GalleryController::class, 'delete'])->name('gallery.delete');

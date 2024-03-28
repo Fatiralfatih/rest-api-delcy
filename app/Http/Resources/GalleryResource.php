@@ -19,7 +19,8 @@ class GalleryResource extends JsonResource
         return [
             'id' => $this->id,
             'image' => $this->image,
-            'product_id' => $this->product_id
+            'product_id' => $this->product_id,
+            'product' => new ProductResource($this->product)
         ];
     }
 }
