@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('slug', 255);
             $table->string('title', 255);
+            $table->string('category', 255);
             $table->string('price', 255);
             $table->string('stock', 255);
             $table->json('variant')->nullable();

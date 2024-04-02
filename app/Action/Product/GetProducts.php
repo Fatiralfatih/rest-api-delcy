@@ -8,7 +8,7 @@ class GetProducts
 {
     function execute()
     {
-        $product = Product::with(['category', 'gallery'])->get();
+        $product = Product::with(['gallery'])->get();
 
         return $product;
     }

@@ -27,7 +27,7 @@ class ProductController extends Controller
     {
         $product = app(GetProductBySlug::class)->execute($slug);
 
-        $response = ProductResource::collection($product->all());
+        $response = new ProductResource($product);
 
         return $this->successResponse('get product by slug', $response, 201);
     }

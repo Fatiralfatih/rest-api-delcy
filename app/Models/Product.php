@@ -19,6 +19,7 @@ class Product extends Model
         'title',
         'price',
         'stock',
+        'category',
         'description',
         'thumbnail',
         'variant',
@@ -27,16 +28,6 @@ class Product extends Model
     protected $cast = [
         'variant' => 'array',
     ];
-
-    /**
-     * Get the category that owns the Product
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
 
 
     function gallery(): HasMany

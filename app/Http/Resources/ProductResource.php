@@ -18,9 +18,9 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category_id' => $this->category_id,
             'slug' => $this->slug,
             'title' => $this->title,
+            'category' => $this->category,
             'price' => $this->price,
             'stock' => $this->stock,
             'description' => $this->description,
@@ -28,7 +28,6 @@ class ProductResource extends JsonResource
             'variant' => json_decode($this->variant, true),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'category' => new CategoryResource($this->whenLoaded('category')),
             'gallery' => GalleryResource::collection($this->whenLoaded('gallery')),
         ];
     }
