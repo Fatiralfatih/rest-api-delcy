@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Support\Str;
 
+
 class CreateProduct
 {
     function execute(StoreProductRequest $request)
@@ -15,10 +16,11 @@ class CreateProduct
             'title' => $request->title,
             'price' => $request->price,
             'stock' => $request->stock,
-            'variant' => json_encode($request->variant),
+            'status' => $request->status,
+            'variant' => $request->variant,
             'category' => $request->category,
             'description' => $request->description,
-            'thumbnail' => $request->thumbnail,
+            'thumbnail' => $request->file('thumbnail')->store('image/product', 'public'),
         ]);
 
         return $product;

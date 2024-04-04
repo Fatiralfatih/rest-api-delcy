@@ -13,6 +13,7 @@ class UpdateProduct
             'title' => $request->title,
             'category' => $request->category,
             'price' => $request->price,
+            'status' => $request->status,
             'stock' => $request->stock,
             'variant' => json_encode($request->variant),
             'thumbnail' => $request->thumbnail,

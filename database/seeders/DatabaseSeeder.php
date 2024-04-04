@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+use Illuminate\Filesystem\Filesystem;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,12 +17,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(5)->create();
-        Product::factory()
-            ->count(10)
-            ->state(fn() => ['category_id' => Category::select(['id'])->get()->random()])
-            ->create();
+        $fs = new Filesystem;
 
-        Gallery::factory(10)->state(fn() => ['product_id' => Product::select(['id'])->get()->random()])->create();
+        // delete directories
+        $except_folder_names = [
+            // folder name (storage/app/public/<folder_name>)
+        ];
+        $folder_paths = $fs->directories(public_path('storage'));
+        foreach ($folder_paths as $folder_path) {
+            $folder_name = last(explode('/', $folder_path));
+            if (!in_array($folder_name, $except_folder_names)) {
+                $fs->deleteDirectory($folder_path);
+            }
+        }
+
+        // delete files
+        $except_file_names = [
+            '.gitignore',
+            // file name (storage/app/public/<file_name>)
+        ];
+        $file_paths = $fs->files(public_path('storage'));
+        foreach ($file_paths as $file_path) {
+            $file_name = last(explode('/', $file_path));
+            if (!in_array($file_name, $except_file_names)) {
+                $fs->delete($file_path);
+            }
+        }
+
+        echo "Gambar successfully deleted!\n";
     }
 }

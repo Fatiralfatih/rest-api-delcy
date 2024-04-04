@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'stock' => 'required|string|max:255',
+            'status' => 'required|boolean',
             'variant' => 'array',
             'variant.color' => 'required|array',
             'variant.size' => 'required|array',

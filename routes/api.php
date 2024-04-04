@@ -17,10 +17,6 @@ Route::post('/product/create', [ProductController::class, 'store'])->name('produ
 Route::put('/product/{slug}/update', [ProductController::class, 'update'])->name('product.update');
 Route::delete('/product/{slug}/delete', [ProductController::class, 'delete'])->name('product.delete');
 
-//category
-Route::get('/categories', [CategoryController::class, 'index'])->name('category.index');
-Route::post('/category/create', [CategoryController::class, 'store'])->name('category.store');
-
 // gallery
 Route::get('galleries/{productId}', [GalleryController::class, 'show'])->name('gallery.index');
 Route::post('gallery/{slugProduct}/create', [GalleryController::class, 'store'])->name('gallery.store');

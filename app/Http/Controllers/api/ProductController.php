@@ -11,6 +11,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -35,9 +36,7 @@ class ProductController extends Controller
     function store(StoreProductRequest $request): JsonResponse
     {
         $product = app(CreateProduct::class)->execute($request);
-
         $response = new ProductResource($product);
-
         return $this->successResponse('create product', $response, 201);
     }
 
@@ -53,6 +52,8 @@ class ProductController extends Controller
     function delete(string $slug): JsonResponse
     {
         $product = app(GetProductBySlug::class)->execute($slug);
+
+        Storage::delete('public/' . $product->thumbnail);
 
         $product->delete();
 

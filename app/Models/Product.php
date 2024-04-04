@@ -6,7 +6,6 @@ use App\Models\Gallery;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -20,6 +19,7 @@ class Product extends Model
         'price',
         'stock',
         'category',
+        'status',
         'description',
         'thumbnail',
         'variant',
@@ -27,6 +27,7 @@ class Product extends Model
 
     protected $cast = [
         'variant' => 'array',
+        'status' => 'boolean',
     ];
 
 
