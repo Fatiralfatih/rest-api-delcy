@@ -26,7 +26,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'price' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
             'stock' => 'required|string|max:255',
             'status' => 'required|boolean',
             'variant' => 'array',
@@ -35,7 +35,7 @@ class UpdateProductRequest extends FormRequest
             'variant.color.*' => 'required|string',
             'variant.size.*' => 'required|string',
             'description' => 'required|string|max:255',
-            'thumbnail' => 'required|string|max:255',
+            'thumbnail' => 'nullable',
         ];
     }
 

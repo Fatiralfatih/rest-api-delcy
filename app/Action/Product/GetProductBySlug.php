@@ -8,7 +8,7 @@ class GetProductBySlug
 {
     function execute($slug)
     {
-        $product = Product::where('slug', $slug)->with(['gallery'])->firstOrFail();
+        $product = Product::where('slug', $slug)->with(['category', 'gallery'])->firstOrFail();
 
         return $product;
     }

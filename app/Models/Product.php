@@ -6,6 +6,7 @@ use App\Models\Gallery;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -18,7 +19,6 @@ class Product extends Model
         'title',
         'price',
         'stock',
-        'category',
         'status',
         'description',
         'thumbnail',
@@ -31,9 +31,13 @@ class Product extends Model
     ];
 
 
+    function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     function gallery(): HasMany
     {
         return $this->hasMany(Gallery::class);
     }
-
 }

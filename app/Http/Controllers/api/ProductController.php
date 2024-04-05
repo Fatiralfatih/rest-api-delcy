@@ -36,7 +36,9 @@ class ProductController extends Controller
     function store(StoreProductRequest $request): JsonResponse
     {
         $product = app(CreateProduct::class)->execute($request);
+
         $response = new ProductResource($product);
+
         return $this->successResponse('create product', $response, 201);
     }
 
@@ -46,7 +48,7 @@ class ProductController extends Controller
 
         app(UpdateProduct::class)->execute($product, $request);
 
-        return $this->successResponse('update product', new ProductResource($product), 201);
+        return $this->successResponse('update product by slug', new ProductResource($product), 201);
     }
 
     function delete(string $slug): JsonResponse

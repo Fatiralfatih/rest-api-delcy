@@ -9,15 +9,15 @@ class UpdateProduct
     public function execute($product, $request)
     {
         return $product->update([
-            'slug' => str::slug($request->title),
+            'slug' => str::slug($request->title, '-'),
+            'category_id' => $request->category_id,
             'title' => $request->title,
-            'category' => $request->category,
             'price' => $request->price,
-            'status' => $request->status,
             'stock' => $request->stock,
-            'variant' => json_encode($request->variant),
-            'thumbnail' => $request->thumbnail,
+            'status' => $request->status,
+            'variant' => $request->variant,
             'description' => $request->description,
+            'thumbnail' => $request->file('thumbnail')->store('image/product', 'public'),
         ]);
     }
 }
