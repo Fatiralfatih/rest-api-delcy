@@ -2,13 +2,14 @@
 
 namespace App\Action\Product;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UpdateProduct
 {
     public function execute($product, $request)
     {
-        return $product->update([
+        $product->update([
             'slug' => str::slug($request->title, '-'),
             'category_id' => $request->category_id,
             'title' => $request->title,
@@ -17,7 +18,6 @@ class UpdateProduct
             'status' => $request->status,
             'variant' => $request->variant,
             'description' => $request->description,
-            'thumbnail' => $request->file('thumbnail')->store('image/product', 'public'),
         ]);
     }
 }

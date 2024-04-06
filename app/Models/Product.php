@@ -33,7 +33,7 @@ class Product extends Model
 
     function category(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     function gallery(): HasMany

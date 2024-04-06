@@ -20,7 +20,7 @@ class CreateProduct
             'status' => $request->status,
             'variant' => $request->variant,
             'description' => $request->description,
-            'thumbnail' => $request->file('thumbnail')->store('image/product', 'public'),
+            'thumbnail' => $request->file('thumbnail')?->store('image/product', 'public'),
         ]);
 
         return $product;

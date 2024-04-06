@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\Filesystem;
 
@@ -14,6 +15,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        Category::factory()->count(5)->create();
+
         $fs = new Filesystem;
 
         // delete directories

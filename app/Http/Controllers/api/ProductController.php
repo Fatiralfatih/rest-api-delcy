@@ -48,14 +48,16 @@ class ProductController extends Controller
 
         app(UpdateProduct::class)->execute($product, $request);
 
-        return $this->successResponse('update product by slug', new ProductResource($product), 201);
+        return $this->successResponse('update product by slug', new ProductResource($product), 200);
     }
 
     function delete(string $slug): JsonResponse
     {
         $product = app(GetProductBySlug::class)->execute($slug);
 
-        Storage::delete('public/' . $product->thumbnail);
+        if ($product->thumbnail) {
+            Storage::delete('public/' . $product->thumbnail);
+        }
 
         $product->delete();
 
