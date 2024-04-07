@@ -27,7 +27,6 @@ class GalleryController extends Controller
 
         if (is_array($request->file('image'))) {
             $uploadImages = [];
-            $product = app(GetProductBySlug::class)->execute($slugProduct);
             foreach ($request->file('image') as $image) {
                 $path = $image->store('image/product', 'public');
                 $product->gallery()->create([
@@ -52,6 +51,21 @@ class GalleryController extends Controller
         }
     }
 
+    function update($idGallery, GalleryRequest $request): JsonResponse
+    {
+        $gallery = app(GetGalleryById::class)->execute($idGallery);
+
+        Storage::delete('public/' . $gallery->image);
+
+        $gallery->update([
+            'image' => $request->file('image')->store('image/product', 'public'),
+        ]);
+
+        $response = new GalleryResource($gallery);
+
+        return $this->successResponse('update gallery by id gallery', $response, 200);
+    }
+
     function delete(int $idGallery): JsonResponse
     {
         $gallery = app(GetGalleryById::class)->execute($idGallery);
@@ -64,4 +78,15 @@ class GalleryController extends Controller
 
         return $this->successResponse('delete gallery by id', new GalleryResource($gallery), 200);
     }
+
+    function deleteMany(string $slugProduct): JsonResponse
+    {
+        $product = app(GetProductBySlug::class)->execute($slugProduct);
+        foreach ($product->gallery as $gallery) {
+            Storage::delete('public/' . $gallery->image);
+        }
+        $product->gallery()->delete();
+        return $this->successResponse('delete many galleries by slug product', $product->gallery, 200);
+    }
+
 }

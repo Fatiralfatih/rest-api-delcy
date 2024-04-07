@@ -31,4 +31,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('gallery/{slugProduct}/create', [GalleryController::class, 'store'])->name('gallery.store');
     Route::put('gallery/{idGallery}/update', [GalleryController::class, 'update'])->name('gallery.update');
     Route::delete('gallery/{idGallery}/delete', [GalleryController::class, 'delete'])->name('gallery.delete');
+    Route::delete('gallery/{slugProduct}/deleteMany', [GalleryController::class, 'deleteMany'])->name('gallery.deleteMany');
 });

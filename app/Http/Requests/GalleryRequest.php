@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class GalleryRequest extends FormRequest
 {
@@ -23,19 +21,9 @@ class GalleryRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this->image);
         return [
             'image' => 'required',
             'image*' => 'required|mimes:jpeg,jpg,png',
         ];
-    }
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'code' => 422,
-            'status' => 'failed',
-            'message' => 'Validation errors',
-            'errors' => $validator->errors()
-        ], 422));
     }
 }
