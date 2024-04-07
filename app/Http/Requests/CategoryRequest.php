@@ -25,17 +25,7 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:categories,name'
+            'name' => 'required|min:2|string|max:255|unique:categories,name'
         ];
-    }
-
-    public function failedValidation(Validator $validator): JsonResponse
-    {
-        throw new HttpResponseException(response()->json([
-            'code' => 422,
-            'status' => 'failed',
-            'message' => 'Validation errors',
-            'errors' => $validator->errors()
-        ], 422));
     }
 }
