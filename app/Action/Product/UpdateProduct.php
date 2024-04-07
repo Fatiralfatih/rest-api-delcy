@@ -9,14 +9,24 @@ class UpdateProduct
 {
     public function execute($product, $request)
     {
+        $slug = '';
+        $title = '';
+        if ($request->title) {
+            $title .= $request->title;
+            $slug .= str::slug($request->title, '-');
+        } else {
+            $title .= $product->title;
+            $slug .= str::slug($product->slug, '-');
+        }
+
         $product->update([
-            'slug' => str::slug($request->title, '-'),
             'category_id' => $request->category_id,
-            'title' => $request->title,
+            'slug' => $slug,
+            'title' => $title,
             'price' => $request->price,
             'stock' => $request->stock,
             'status' => $request->status,
-            'variant' => $request->variant,
+            'variant' => json_encode($request->variant),
             'description' => $request->description,
         ]);
     }

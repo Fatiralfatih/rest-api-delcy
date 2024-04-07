@@ -4,9 +4,12 @@ namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Throwable;
 
@@ -44,6 +47,10 @@ class Handler extends ExceptionHandler
                     $errors[$field] = $messages[0];
                 }
                 return response()->json(['status' => 'failed', 'message' => 'Validation errors', 'errors' => $errors], 422);
+            } else if ($exception instanceof NotFoundHttpException) {
+                return response()->json(['status' => 'failed', 'message' => 'endpoint tidak ditemukan'], 404);
+            } else if ($exception instanceof ModelNotFoundException) {
+                return response()->json(['status' => 'failed', 'message' => 'data tidak ditemukan'], 404);
             }
         }
         return parent::render($request, $exception);

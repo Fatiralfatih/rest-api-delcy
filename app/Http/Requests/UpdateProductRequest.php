@@ -24,26 +24,17 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'price' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'stock' => 'required|string|max:255',
+            'title' => ' nullable|min:2|max:255|unique:products,title',
+            'price' => 'required|min:2|string|max:255',
+            'category_id' => 'required|min:1|exists:categories,id',
+            'stock' => 'required|string|min:2|max:255',
             'status' => 'required|boolean',
             'variant.color' => 'array',
             'variant.size' => 'array',
-            'variant.color.*' => 'required|string|max:255',
-            'variant.size.*' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            'variant.color.*' => 'required|min:2|string|max:255',
+            'variant.size.*' => 'required|min:2|string|max:255',
+            'description' => 'required|min:10|string|max:255',
         ];
     }
 
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'code' => 422,
-            'status' => 'failed',
-            'message' => 'Validation errors',
-            'errors' => $validator->errors()
-        ], 422));
-    }
 }

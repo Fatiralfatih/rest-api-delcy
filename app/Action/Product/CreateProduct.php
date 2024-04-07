@@ -18,7 +18,7 @@ class CreateProduct
             'price' => $request->price,
             'stock' => $request->stock,
             'status' => $request->status,
-            'variant' => $request->variant,
+            'variant' => json_encode($request->variant),
             'description' => $request->description,
             'thumbnail' => $request->file('thumbnail')?->store('image/product', 'public'),
         ]);
