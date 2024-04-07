@@ -24,7 +24,7 @@ class Controller extends BaseController
     {
         return response()->json([
             'status' => 'failed',
-            'message' => $message,
+            'errors' => $message,
             'data' => null,
         ], $code);
     }
